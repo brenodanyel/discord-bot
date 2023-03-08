@@ -21,8 +21,6 @@ export class AskGPT implements Command {
   async execute(interaction: ChatInputCommandInteraction) {
     const question = interaction.options.getString("question", true);
 
-    await interaction.deferReply();
-
     const response = await this.openAI.ask(question);
 
     const embed = new EmbedBuilder()

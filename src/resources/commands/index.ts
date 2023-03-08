@@ -17,13 +17,13 @@ export class Commands {
       if (!interaction.isChatInputCommand()) return;
 
       try {
+        await interaction.deferReply();
         await this.handleInteraction(interaction);
       } catch (e) {
         console.error(e);
         if (!interaction.replied) {
-          await interaction.reply({
+          await interaction.editReply({
             content: `Houve um erro ao executar este comando! ${e instanceof Error ? " (" + e.message + ")" : ""}`,
-            ephemeral: true,
           });
         }
       }

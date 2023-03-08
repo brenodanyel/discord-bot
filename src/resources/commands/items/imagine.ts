@@ -20,8 +20,6 @@ export class Imagine implements Command {
   async execute(interaction: ChatInputCommandInteraction) {
     const question = interaction.options.getString("imagine", true);
 
-    await interaction.deferReply();
-
     const response = await this.openAI.imagine(question);
 
     const embed = new EmbedBuilder()
