@@ -42,7 +42,13 @@ export class Commands {
   private async handleInteraction(interaction: ChatInputCommandInteraction) {
     const command = this.commands.find((item) => item.command.name === interaction.commandName);
 
-    if (!command) return;
+    if (!command) {
+      throw new Error("Comando não encontrado!");
+    }
+
+    if (typeof command.execute !== "function") {
+      throw new Error("Comando não possui função de execução!");
+    }
 
     await command.execute(interaction);
 
