@@ -1,3 +1,5 @@
+test
+
 # Bot do Discord com integração da API OpenAI
 
 Este projeto é um bot do Discord que integra a API OpenAI, incluindo o chatbot GPT e a geração de imagens do DALL-E.
