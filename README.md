@@ -1,4 +1,4 @@
-test
+test2
 
 # Bot do Discord com integração da API OpenAI
 
