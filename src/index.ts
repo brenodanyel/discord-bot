@@ -1,10 +1,10 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import * as Discord from "discord.js";
 import "dotenv/config";
 import { env } from "./env";
 import { GPTIntegrationModule } from "./modules/gpt-integration";
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+const client = new Discord.Client({
+  intents: [Discord.GatewayIntentBits.Guilds, Discord.GatewayIntentBits.GuildMessages, Discord.GatewayIntentBits.MessageContent],
 });
 
 client.login(env.DISCORD_TOKEN);

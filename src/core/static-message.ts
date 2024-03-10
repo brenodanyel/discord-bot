@@ -1,7 +1,7 @@
-import { BaseMessageOptions } from "discord.js";
+import * as Discord from "discord.js";
 
 export abstract class StaticMessage {
   abstract channelId: string;
   abstract existingMessageId: string | null;
-  abstract message: BaseMessageOptions;
+  abstract message: Discord.BaseMessageOptions;
 }

@@ -1,12 +1,15 @@
-import { ChannelType, Client, REST, Routes } from "discord.js";
+import * as Discord from "discord.js";
 import { env } from "../env";
-import { Command } from "./command";
+import { Interaction } from './interactions';
+import { SlashCommand } from "./slash-command";
 import { StaticMessage } from "./static-message";
 
 type ModuleProps = {
-  bot: Client<true>;
-  commands: Command[];
+  bot: Discord.Client<true>;
+
+  commands: SlashCommand[];
   staticMessages: StaticMessage[];
+  interactions: Interaction[];
 };
 
 export abstract class Module {
@@ -15,6 +18,7 @@ export abstract class Module {
   ) {
     this.setupCommands();
     this.setupStaticMessages();
+    this.setupInteractions();
   }
 
   private async setupCommands() {
@@ -47,9 +51,9 @@ export abstract class Module {
     const commandsNames = this.props.commands.map(({ command }) => command.name).join(", ");
     console.log(`Registering the following commands for ${this.constructor.name}: ${commandsNames}.`);
 
-    const route = Routes.applicationCommands(env.DISCORD_CLIENT_ID);
+    const route = Discord.Routes.applicationCommands(env.DISCORD_CLIENT_ID);
 
-    await new REST({ version: "10" })
+    await new Discord.REST({ version: "10" })
       .setToken(env.DISCORD_TOKEN)
       .put(route, { body: this.props.commands.map(({ command }) => command.toJSON()) })
       .then(() => console.log(`Successfully reloaded application (/) commands for ${this.constructor.name}.`))
@@ -69,7 +73,7 @@ export abstract class Module {
         return;
       }
 
-      if (channel.type !== ChannelType.GuildText) {
+      if (channel.type !== Discord.ChannelType.GuildText) {
         console.error(`Channel type not supported for static message ${staticMessage.constructor.name}.`);
         return;
       }
@@ -91,5 +95,29 @@ export abstract class Module {
     };
 
     await Promise.all(this.props.staticMessages.map(callback));
+  }
+
+  private async setupInteractions() {
+    this.props.bot.on("interactionCreate", async (interaction) => {
+      if (!interaction.isButton()) return;
+
+      const interactionHandler = this.props.interactions.find(({ id }) => id === interaction.customId);
+      if (!interactionHandler) return;
+
+      await interaction.deferUpdate();
+
+      try {
+        await interactionHandler.execute(interaction);
+      } catch (error) {
+        console.error(error);
+
+        if (interaction.deferred || interaction.replied) {
+          await interaction.editReply({ content: "Houve um erro ao executar a interação." });
+          return;
+        }
+
+        await interaction.reply({ content: "Houve um erro ao executar a interação.", ephemeral: true });
+      }
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { Command } from "../../../core/command";
+import { SlashCommand } from "../../../core/slash-command";
 
-export class Imagine implements Command {
+export class Imagine implements SlashCommand {
   ephemeralReply = true;
   command: SlashCommandBuilder;
 
