@@ -4,13 +4,13 @@ import { Command } from "./command";
 import { StaticMessage } from "./static-message";
 
 type ModuleProps = {
+  bot: Client<true>;
   commands: Command[];
   staticMessages: StaticMessage[];
 };
 
 export abstract class Module {
   constructor(
-    private readonly bot: Client<true>,
     private readonly props: ModuleProps //
   ) {
     this.setupCommands();
@@ -20,7 +20,7 @@ export abstract class Module {
   private async setupCommands() {
     await this.registerCommands();
 
-    this.bot.on("interactionCreate", async (interaction) => {
+    this.props.bot.on("interactionCreate", async (interaction) => {
       if (!interaction.isCommand()) return;
 
       const command = this.props.commands.find(({ command }) => command.name === interaction.commandName);
@@ -62,7 +62,7 @@ export abstract class Module {
     const callback = async (staticMessage: StaticMessage) => {
       console.log(`Setting up static message for ${this.constructor.name}: ${staticMessage.constructor.name}.`);
 
-      const channel = await this.bot.channels.fetch(staticMessage.channelId);
+      const channel = await this.props.bot.channels.fetch(staticMessage.channelId);
 
       if (!channel) {
         console.error(`Channel not found for static message ${staticMessage.constructor.name}.`);

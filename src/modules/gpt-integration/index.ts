@@ -5,7 +5,8 @@ import { Welcome } from "./static-messages/welcome";
 
 export class GPTIntegrationModule extends Module {
   constructor(bot: Client<true>) {
-    super(bot, {
+    super({
+      bot,
       commands: [new Imagine()],
       staticMessages: [new Welcome()],
     });
