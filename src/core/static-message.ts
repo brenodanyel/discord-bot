@@ -6,7 +6,7 @@ export abstract class StaticMessage {
   abstract message: Discord.BaseMessageOptions;
 
   async load(bot: Discord.Client<true>) {
-    const channel = await bot.channels.fetch(this.channelId);
+    const channel = await bot.channels.fetch(this.channelId).catch(() => null);
 
     if (!channel) {
       console.error(`Channel not found for static message ${this.constructor.name}.`);
@@ -19,10 +19,10 @@ export abstract class StaticMessage {
     }
 
     if (this.existingMessageId) {
-      const message = await channel.messages.fetch(this.existingMessageId);
+      const message = await channel.messages.fetch(this.existingMessageId).catch(() => null);
 
       if (!message) {
-        console.error(`Message not found for static message ${this.constructor.name}.`);
+        console.error(`Message not found for static message ${this.constructor.name}. (${this.existingMessageId})`);
         return;
       }
 

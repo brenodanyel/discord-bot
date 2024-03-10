@@ -10,21 +10,7 @@ export abstract class SlashCommand {
     bot.on("interactionCreate", async (interaction) => {
       if (!interaction.isCommand()) return;
       if (interaction.commandName !== this.command.name) return;
-
-      await interaction.deferReply({ ephemeral: this.ephemeralReply });
-
-      try {
-        await this.execute(interaction);
-      } catch (error) {
-        console.error(error);
-
-        if (interaction.deferred || interaction.replied) {
-          await interaction.editReply({ content: "Houve um erro ao executar o comando." });
-          return;
-        }
-
-        await interaction.reply({ content: "Houve um erro ao executar o comando.", ephemeral: this.ephemeralReply });
-      }
+      return this.execute(interaction);
     });
   }
 

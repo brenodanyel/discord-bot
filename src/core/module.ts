@@ -1,5 +1,7 @@
 import * as Discord from "discord.js";
 import { Interaction } from "./interactions";
+import { MessageListener } from "./message-listener";
+import { ModalSubmission } from "./modal-submissions";
 import { SlashCommand } from "./slash-command";
 import { StaticMessage } from "./static-message";
 
@@ -9,6 +11,8 @@ type ModuleProps = {
   commands: SlashCommand[];
   staticMessages: StaticMessage[];
   interactions: Interaction[];
+  modalSubmissions: ModalSubmission[];
+  messageListeners: MessageListener[];
 };
 
 export abstract class Module {
@@ -26,6 +30,14 @@ export abstract class Module {
 
     for (const interaction of this.props.interactions) {
       interaction.setupEvents(this.props.bot);
+    }
+
+    for (const modalSubmission of this.props.modalSubmissions) {
+      modalSubmission.setupEvents(this.props.bot);
+    }
+
+    for (const messageListener of this.props.messageListeners) {
+      messageListener.setupEvents(this.props.bot);
     }
   }
 }

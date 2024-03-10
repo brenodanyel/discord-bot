@@ -4,7 +4,7 @@ import { SlashCommand } from "../../../core/slash-command";
 export class ImagineCommand extends SlashCommand {
   ephemeralReply = true;
 
-  command = new Discord.SlashCommandBuilder() //
+  command = new Discord.SlashCommandBuilder()
     .setName("imagine")
     .addStringOption((option) => option.setName("imagine").setDescription("O que você quer que o bot imagine?").setRequired(true))
     .setDescription("Peça para o bot imaginar algo");

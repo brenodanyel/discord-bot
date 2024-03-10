@@ -30,8 +30,6 @@ export class OpenAIHelper {
       presence_penalty: 0.6,
     });
 
-    console.log({ result });
-
     const choice = result.choices[0].message.content;
 
     if (!choice) throw new Error("Reposta não encontrada");
