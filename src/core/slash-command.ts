@@ -28,7 +28,7 @@ export abstract class SlashCommand {
     });
   }
 
-  register(bot: Discord.Client<true>) {
+  register() {
     const route = Discord.Routes.applicationCommands(env.DISCORD_CLIENT_ID);
     new Discord.REST({ version: "10" })
       .setToken(env.DISCORD_TOKEN)

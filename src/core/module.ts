@@ -16,7 +16,7 @@ export abstract class Module {
     private readonly props: ModuleProps //
   ) {
     for (const command of this.props.commands) {
-      command.register(this.props.bot);
+      command.register();
       command.setupEvents(this.props.bot);
     }
 
