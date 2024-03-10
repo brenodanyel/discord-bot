@@ -6,6 +6,8 @@ export class WelcomeInteraction extends Interaction {
 
   async execute(interaction: Discord.Interaction): Promise<void> {
     if (!interaction.isMessageComponent()) return;
-    interaction.reply("Welcome to the server!");
+    if (!interaction.channel) return;
+
+    await interaction.channel.send({ content: "Olá! Como posso te ajudar?" });
   }
 }
