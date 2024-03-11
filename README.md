@@ -19,8 +19,8 @@ Este projeto é um bot do Discord que integra a API OpenAI, incluindo o chatbot 
 2. Obtenha uma chave de API para a API OpenAI. Consulte a [página de api na OpenAI](https://platform.openai.com/account/api-keys) para a sua chave.
 3. Renomeie o arquivo `.env.example` para `.env`.
 4. Abra o arquivo `.env` e preencha os dados necessários:
-   - `TOKEN`: o token do seu bot do Discord
-   - `CLIENT_ID`: o ID do cliente do seu bot do Discord.
+   - `DISCORD_TOKEN`: o token do seu bot do Discord
+   - `DISCORD_CLIENT_ID`: o ID do cliente do seu bot do Discord.
    - `OPENAI_API_KEY`: a sua chave de API do OpenAI
  
 ## Utilização
@@ -30,7 +30,4 @@ Este projeto é um bot do Discord que integra a API OpenAI, incluindo o chatbot 
 3. Convide o bot para o seu servidor do Discord seguindo as instruções na [documentação do desenvolvedor do Discord](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links).
 4. Utilize os comandos listados no menu de ajuda do bot para interagir com a API OpenAI, incluindo o chatbot GPT e a geração de imagens do DALL-E. Para acessar o menu de ajuda, digite `/ajuda` em um canal de texto onde o bot está presente.
 
-## Comandos disponíveis no bot
 
-- `/ask-gpt [prompt]`: gera uma resposta do chatbot GPT usando o prompt fornecido.
-- `/imagine [prompt]`: gera uma imagem do modelo DALL-E usando o prompt fornecido.
